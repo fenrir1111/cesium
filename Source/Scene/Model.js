@@ -51,9 +51,9 @@ define([
         '../ThirdParty/GltfPipeline/ForEach',
         '../ThirdParty/GltfPipeline/getAccessorByteStride',
         '../ThirdParty/GltfPipeline/numberOfComponentsForType',
-        '../ThirdParty/GltfPipeline/parseBinaryGltf',
-        '../ThirdParty/GltfPipeline/processModelMaterialsCommon',
-        '../ThirdParty/GltfPipeline/processPbrMetallicRoughness',
+        '../ThirdParty/GltfPipeline/parseGlb',
+        // '../ThirdParty/GltfPipeline/processModelMaterialsCommon',
+        // '../ThirdParty/GltfPipeline/processPbrMetallicRoughness',
         '../ThirdParty/GltfPipeline/updateVersion',
         '../ThirdParty/Uri',
         '../ThirdParty/when',
@@ -129,9 +129,9 @@ define([
         ForEach,
         getAccessorByteStride,
         numberOfComponentsForType,
-        parseBinaryGltf,
-        processModelMaterialsCommon,
-        processPbrMetallicRoughness,
+        parseGlb,
+        // processModelMaterialsCommon,
+        // processPbrMetallicRoughness,
         updateVersion,
         Uri,
         when,
@@ -319,7 +319,7 @@ define([
 
                 if (gltf instanceof Uint8Array) {
                     // Binary glTF
-                    var parsedGltf = parseBinaryGltf(gltf);
+                    var parsedGltf = parseGlb(gltf);
 
                     cachedGltf = new CachedGltf({
                         gltf : parsedGltf,
@@ -1239,7 +1239,7 @@ define([
                 var array = new Uint8Array(arrayBuffer);
                 if (containsGltfMagic(array)) {
                     // Load binary glTF
-                    var parsedGltf = parseBinaryGltf(array);
+                    var parsedGltf = parseGlb(array);
                     // KHR_binary_glTF is from the beginning of the binary section
                     cachedGltf.makeReady(parsedGltf, array);
                 } else {
@@ -4248,16 +4248,21 @@ define([
                         addBatchIdToGeneratedShaders : this._addBatchIdToGeneratedShaders
                     };
                     frameState.brdfLutGenerator.update(frameState);
+
+                    ModelUtility.checkSupportedExtensions(this.extensionsRequired);
+
+                    addPipelineExtras(this.gltf);
+
                     updateVersion(this.gltf);
                     if (defined(this.gltf.asset) && defined(this.gltf.asset.extras) &&
                         this.gltf.asset.extras.gltf_pipeline_upgrade_10to20) {
-                            this._forwardAxis = Axis.X;
+                        this._forwardAxis = Axis.X;
                     }
-                    ModelUtility.checkSupportedExtensions(this.extensionsRequired);
-                    addPipelineExtras(this.gltf);
+
                     addDefaults(this.gltf);
-                    processModelMaterialsCommon(this.gltf, options);
-                    processPbrMetallicRoughness(this.gltf, options);
+
+                    //processModelMaterialsCommon(this.gltf, options);
+                    //processPbrMetallicRoughness(this.gltf, options);
 
                     // Skip dequantizing in the shader if not encoded
                     this._dequantizeInShader = this._dequantizeInShader && DracoLoader.hasExtension(this);

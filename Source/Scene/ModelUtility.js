@@ -33,6 +33,16 @@ define([
      */
     var ModelUtility = {};
 
+    /**
+     * Processes a glTF asset for rendering in Cesium using gltf-pipeline, upgrading to gltf 2.0
+     * @param {Object} gltf
+     */
+    ModelUtility.processForCesium = function(gltf) {
+        // addPipelineExtras
+        // updateVersion
+        // addDefaults
+    };
+
     ModelUtility.getAccessorMinMax = function(gltf, accessorId) {
         var accessor = gltf.accessors[accessorId];
         var extensions = accessor.extensions;

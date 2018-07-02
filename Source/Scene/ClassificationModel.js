@@ -24,7 +24,7 @@ define([
         '../ThirdParty/GltfPipeline/ForEach',
         '../ThirdParty/GltfPipeline/getAccessorByteStride',
         '../ThirdParty/GltfPipeline/numberOfComponentsForType',
-        '../ThirdParty/GltfPipeline/parseBinaryGltf',
+        '../ThirdParty/GltfPipeline/parseGlb',
         '../ThirdParty/when',
         './Axis',
         './ClassificationType',
@@ -59,7 +59,7 @@ define([
         ForEach,
         getAccessorByteStride,
         numberOfComponentsForType,
-        parseBinaryGltf,
+        parseGlb,
         when,
         Axis,
         ClassificationType,
@@ -124,7 +124,7 @@ define([
 
         if (gltf instanceof Uint8Array) {
             // Binary glTF
-            gltf = parseBinaryGltf(gltf);
+            gltf = parseGlb(gltf);
         } else {
             throw new RuntimeError('Only binary glTF is supported as a classifier.');
         }
