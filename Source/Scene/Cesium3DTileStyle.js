@@ -147,10 +147,11 @@ define([
         var meta = {};
         if (defined(styleJson.meta)) {
             var defines = styleJson.defines;
+            var mutables = styleJson.mutables;
             var metaJson = defaultValue(styleJson.meta, defaultValue.EMPTY_OBJECT);
             for (var property in metaJson) {
                 if (metaJson.hasOwnProperty(property)) {
-                    meta[property] = new Expression(metaJson[property], defines);
+                    meta[property] = new Expression(metaJson[property], defines, mutables);
                 }
             }
         }
@@ -164,14 +165,15 @@ define([
 
     function getExpression(tileStyle, value) {
         var defines = defaultValue(tileStyle._style, defaultValue.EMPTY_OBJECT).defines;
+        var mutables = defaultValue(tileStyle._style, defaultValue.EMPTY_OBJECT).mutables;
         if (!defined(value)) {
             return undefined;
         } else if (typeof value === 'boolean' || typeof value === 'number') {
             return new Expression(String(value));
         } else if (typeof value === 'string') {
-            return new Expression(value, defines);
+            return new Expression(value, defines, mutables);
         } else if (defined(value.conditions)) {
-            return new ConditionsExpression(value, defines);
+            return new ConditionsExpression(value, defines, mutables);
         }
         return value;
     }

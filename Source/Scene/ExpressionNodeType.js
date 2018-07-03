@@ -18,15 +18,15 @@ define([
         ARRAY : 7,
         REGEX: 8,
         VARIABLE_IN_STRING : 9,
-        LITERAL_NULL : 10,
-        LITERAL_BOOLEAN : 11,
-        LITERAL_NUMBER : 12,
-        LITERAL_STRING : 13,
-        LITERAL_COLOR : 14,
-        LITERAL_VECTOR : 15,
-        LITERAL_REGEX : 16,
-        LITERAL_UNDEFINED : 17,
-        BUILTIN_VARIABLE : 18
+        LITERAL_NULL : 11,
+        LITERAL_BOOLEAN : 12,
+        LITERAL_NUMBER : 13,
+        LITERAL_STRING : 14,
+        LITERAL_COLOR : 15,
+        LITERAL_VECTOR : 16,
+        LITERAL_REGEX : 17,
+        LITERAL_UNDEFINED : 18,
+        BUILTIN_VARIABLE : 19
     };
 
     return freezeObject(ExpressionNodeType);
